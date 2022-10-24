@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, FlatList, Image, Text, View } from 'react-native'
 import { Form } from '../../components/Form';
 import { Todo, TodoProps } from '../../components/Todo';
@@ -24,8 +24,18 @@ export const Home: React.FC = () => {
   const handleTodoRemove = (todoRemove: TodoProps) => {
     const findTodo = todos.find(t => t.name === todoRemove.name)
     if (findTodo) {
-      findTodo.status = !todoRemove.status
-      setTodos(todos.filter(t => t.name !== todoRemove.name))
+      Alert.alert('Remover tarefa', 'Deseja deletar tarefa?', [
+        {
+          text: 'Não',
+          style: 'cancel'
+        },
+        {
+          text: 'Sim',
+          onPress: () => {
+            setTodos(todos.filter(t => t.name !== todoRemove.name))
+          }
+        }
+      ])
     }
   }
 
